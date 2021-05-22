@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Spartan:wght@700&display=swap" rel="stylesheet"> 
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  
+  <title>CODE :) Frontend Mentor | Calculator app</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+    .attribution { font-size: 11px; text-align: center; }
+    .attribution a { color: hsl(228, 45%, 44%); }
+  </style>
+</head>
+<body>
+  <div class = "container">
+    <div class = "header">
+      <h3> calc </h3>
+      <p> theme </p>
+      <label class="switch">
+        <input type="checkbox">
+        <span class="slider round"></span>
+      </label>
+    </div>
+
+    <!-- Screen that displays the total and the number being input -->
+    <div class = "display">
+      <p id = "history"></p>
+      <p id ="screen"> 0 </p> <!-- 0  is the default value -->
+    </div>
+    
+    <!-- All the buttons are kept here -->
+    <div class= "keypad-container">
+      <div class = "keypad">
+        
+          <button class="pemdas" onclick="isClicked(7)">7</button>
+          <button class="pemdas" onclick="isClicked(8)">8</button>
+          <button class="pemdas" onclick="isClicked(9)">9</button>
+          <button class="del" onclick="isClicked('DEL')">DEL</button>
+        
+        
+          <button class="pemdas" onclick="isClicked(4)">4</button>
+          <button class="pemdas" onclick="isClicked(5)">5</button>
+          <button class="pemdas" onclick="isClicked(6)">6</button>
+          <button class="pemdas" onclick="isClicked('+')">+</button>
+        
+        
+          <button class="pemdas" onclick="isClicked(1)">1</button>
+          <button class="pemdas" onclick="isClicked(2)">2</button>
+          <button class="pemdas" onclick="isClicked(3)">3</button>
+          <button class="pemdas" onclick="isClicked('-')">-</button>
+        
+        
+          <button class="pemdas" onclick="isClicked('.')">.</button>
+          <button class="pemdas" onclick="isClicked(0)">0</button>
+          <button class="pemdas" onclick="isClicked('/')">/</button>
+          <button class="pemdas" onclick="isClicked('x')">x</button>
+        
+          <button class="reset" onclick="isClicked('RESET')">RESET</button>
+          <button class="equal" onclick="isClicked('=')">=</button>
+        
+      </div>
+    </div>
+  </div>
+  <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+    Coded by <a href="#">Your Name Here</a>.
+  </div>
+
+  
+<script>
+    var numbers = new Array(0);
+    var operations = new Array(0);
+    var hist_log = new Array(0);
+    var calculations = new Array(0);
+
+    var op_switch = true; //if false, last input was a number. if true, last input was an operator
+    var calculated = false; //this keeps the history log neat when displayed
+    var on_display = 0; //stores what number is displayed on the screen
+    var hist_display = '';
+
+    /* Returns history log in one long string */
+    function getHistory(){
+        var str = "";
+        for(let i = 0; i < hist_log.length; i++){
+          str = str + hist_log[i] +  " ";
+        }
+        return str;
+      }
+
+    /* Handles all the buttons and diplaying results to string */
+    function isClicked(input) {
+
+      if (!isNaN(input)){
+        /*--- if a number ---*/
+        console.log("input = number ", input);
+        if (op_switch == true){
+          numbers.push("" + input); //push to list
+          op_switch = false;
+        }
+        else {
+          numbers[numbers.length -1] = "" + numbers[numbers.length -1] + input; //contenate
+        }
+        on_display = numbers[numbers.length -1];
+      }
+
+      else {
+        /*--- if a decimal ---*/
+        if (input == "."){
+          console.log("input = decimal");
+          if (op_switch == true){
+            numbers.push("0" + input); //push to list
+            op_switch = false;
+          }
+          else{
+            numbers[numbers.length -1] = "" + numbers[numbers.length -1] + input; //contenate
+          }
+        }
+
+        /*--- if an operator ---*/
+        else if (input == '+' || input == '-' || input == '/' || input == 'x'){
+          console.log("input = operator");
+          op_switch = true;
+          operations.push(input); //update list of operations
+
+          if (!calculated){
+            hist_log.push(numbers[numbers.length -1]); //update history with last number 
+          }
+          else {
+            calculated = false;
+          }
+
+          hist_log.push(input); //update history with this operator
+          hist_display = getHistory();
+        }
+
+        /*--- if the delete button ---*/
+        else if (input == 'DEL') {
+          if (op_switch == true){
+            //take back the last operand
+            operations.pop();
+            hist_log.pop(); //takes off last operator
+            hist_log.pop(); //takes off the last pushed number
+
+            op_switch = false;
+
+            hist_display = getHistory();
+            on_display = numbers[numbers.length -1];
+          }
+          else {
+            console.log("input = DEL");
+            //backspace by taking a number off the end
+
+            if (numbers.length != 0) {
+              numbers[numbers.length -1] = numbers[numbers.length -1].slice(0, -1);
+              on_display = numbers[numbers.length -1];
+            }
+            else {
+              console.log("Attempted deletion- Nothing to delete.");
+            }
+
+            //if taking the last char off makes it 0, make it empty
+            if (numbers[numbers.length -1] == '0'){ 
+              console.log("Making string empty...");
+              numbers[numbers.length -1] = numbers[numbers.length -1].slice(0, -1);
+              on_display = '0';
+            }
+            //if taking the last char off makes it an empty string, display 0
+            if (numbers[numbers.length -1] == ''){ 
+              console.log("String is empty - displaying 0.");
+              on_display = '0';
+            }
+          }
+        }
+
+        /*--- if the reset button ---*/
+        else if (input == 'RESET') {
+          console.log("input = RESET");
+          //empty everything out and start from scratch
+          numbers.length = 0;
+          operations.length = 0;
+          hist_log.length = 0;
+
+          op_switch = true; 
+
+          hist_display = '';
+          on_display = 0;
+        }
+
+        /*--- if the = button ---*/
+        else if (input == '=') {
+          console.log("Calculating...");
+          let tempnum = parseFloat(numbers[0]);
+          let num_index = 1;
+
+          if (numbers.length > 0){ //if there's something to calculate
+          hist_log.push(numbers[numbers.length -1]); 
+            for (let i = 0; i < operations.length; i++){
+              if(operations[i] == '+'){
+                tempnum = tempnum + parseFloat(numbers[num_index]);
+              }
+              else if(operations[i] == '-'){
+                tempnum = tempnum - parseFloat(numbers[num_index]);
+              }
+              else if(operations[i] == '/'){
+                tempnum = tempnum / parseFloat(numbers[num_index]);
+              }
+              else if(operations[i] == 'x'){
+                tempnum = tempnum * parseFloat(numbers[num_index]);
+              }
+              num_index++;
+            }
+            on_display = tempnum;
+            hist_display = getHistory();
+            calculated = true;
+          }
+           
+        }
+      }
+
+
+
+      document.getElementById("history").innerHTML = hist_display;
+      document.getElementById("screen").innerHTML = on_display;
+    }
+</script>
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+* {
+    font-family: 'Spartan', sans-serif;
+}
+body{
+    background-color: rgb(58, 71, 100);
+    color: white;
+    font-family: 'Spartan', sans-serif;
+}
+
+/*---Classes---*/
+.container{
+    margin: 5% 30%;
+}
+.header {
+    display: grid;
+    width: 70%;
+    grid-template-columns: repeat(3, 20%);
+}
+.display{
+    border-radius: 5px;
+    padding: 5px;
+    background-color: hsl(224, 36%, 15%);
+    width: 70%;
+    text-align: right;
+}
+/* keypad */
+.keypad-container{
+    border-radius: 5px;
+    position: relative;
+    
+    width: 70%;
+    background-color: hsl(223, 31%, 20%);
+    box-sizing: border-box;
+    height: 200px;
+    padding: 5%;
+}
+.keypad{
+    position: absolute;
+    display: grid;
+    text-align: center;
+    grid-template-columns: repeat(4, 40%);
+    grid-template-rows: repeat(5, 25%);
+    
+    grid-row-gap: 10%;
+    grid-column-gap: 5%;
+
+    padding: 20px 0;
+}
+.pemdas{
+    border-radius: 5px;
+    background-color: hsl(30, 25%, 89%);
+    color: hsl(223, 31%, 20%);
+}
+.del{
+    
+    border-radius: 5px;
+    background-color: hsl(225, 21%, 49%);
+    color: white;
+}
+.reset{
+    font-size: 10px;
+    border-radius: 5px;
+    background-color: hsl(225, 21%, 49%);
+    grid-column-start: 1;
+    grid-column-end: 3;
+    color: white;
+}
+.equal{
+    border-radius: 5px;
+    background-color: hsl(6, 63%, 50%);
+    grid-column-start: 3;
+    grid-column-end: 5;
+    color: white;
+}
