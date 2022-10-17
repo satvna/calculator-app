@@ -19,12 +19,23 @@
 <body>
   <div class = "container">
     <div class = "header">
-      <h3> calc </h3>
-      <p> theme </p>
-      <label class="switch">
-        <input type="checkbox">
-        <span class="slider round"></span>
-      </label>
+      <div class="calc">
+        <h1> calc </h1>
+      </div>
+      
+      <!-- THEMES TOGGLE -->
+      <div class="theme-toggle">
+        <p> THEME </p>
+        <div class="switches">
+          <input id="theme1" name="themes" type="radio" class="theme-switches" checked>
+          <label for ="theme1"></label>
+          <input id="theme2" name="themes" type="radio" class="theme-switches">
+          <label for ="theme2"></label>
+          <input id="theme3" name="themes" type="radio" class="theme-switches">
+          <label for ="theme3"></label>
+        </div>
+      </div>
+     
     </div>
 
     <!-- Screen that displays the total and the number being input -->

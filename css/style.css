@@ -13,8 +13,32 @@ body{
 }
 .header {
     display: grid;
-    width: 70%;
+    width: 100%;
     grid-template-columns: repeat(3, 20%);
+}
+.calc {
+    grid-column: 1/2;
+}
+.theme-toggle {
+    grid-column: 3/4;
+    display: flex;
+    align-items: center;
+    font-size: 0.5rem;
+    font-weight: 100;
+}
+.switches input[type="radio"]{
+    display: none;
+}
+.theme-switches:checked + label {
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    background-color: red;
+}
+.switches {
+    display: flex;
+    background-color: hsl(223, 31%, 20%);
+    border-radius: 200px;
 }
 .display{
     border-radius: 5px;
@@ -28,7 +52,7 @@ body{
     border-radius: 5px;
     position: relative;
     
-    width: 70%;
+    width: 50vw;
     background-color: hsl(223, 31%, 20%);
     box-sizing: border-box;
     height: 200px;
